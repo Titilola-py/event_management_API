@@ -13,7 +13,7 @@ A FastAPI-based system for managing events, users, speakers, and registrations. 
 
 ## Requirements
 
-- Python 3.13.3
+- Python 3.12.4
 - FastAPI
 - Uvicorn
 - Pydantic
@@ -23,11 +23,11 @@ A FastAPI-based system for managing events, users, speakers, and registrations. 
 1. **Clone the repository**
 
    ```bash
-   git clone <your-repository-url>
+   git clone https://github.com/Titilola-py/event_management_API
    cd event_management_api
    ```
 
-2. **Create a virtual environment** (recommended)
+2. **Create a virtual environment**
 
    ```bash
    python -m venv venv
@@ -42,12 +42,6 @@ A FastAPI-based system for managing events, users, speakers, and registrations. 
 ## Running the Application
 
 1. **Start the server**
-
-   ```bash
-   python main.py
-   ```
-
-   Or using uvicorn directly:
 
    ```bash
    uvicorn main:app --host 0.0.0.0 --port 8000 --reload
@@ -222,9 +216,9 @@ The API returns appropriate HTTP status codes:
 
 - `200` - Success
 - `201` - Created
-- `204` - No Content (for deletions)
 - `400` - Bad Request (validation errors)
 - `404` - Not Found
+- `500` - Internal server error
 - `422` - Unprocessable Entity (Pydantic validation)
 
 ## Health Check
@@ -243,4 +237,4 @@ curl http://localhost:8000/health
 
 ---
 
-**Developed for AltSchool of Engineering Tinyuka Second Semester Project**
+**Developed for AltSchool of Backend Engineering Tinyuka 2024 Second Semester (Python) Project**

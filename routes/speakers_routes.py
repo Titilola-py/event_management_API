@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import List
-from schemas.speaker import Speaker, SpeakerCreate, SpeakerUpdate
+from schemas.speakers import Speaker, SpeakerCreate, SpeakerUpdate
 from services import speaker_service
 
 router = APIRouter()

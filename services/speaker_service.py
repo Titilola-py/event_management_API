@@ -1,5 +1,5 @@
 from typing import Dict, List, Optional
-from schemas.speaker_schema import Speaker, SpeakerCreate, SpeakerUpdate
+from schemas.speakers import Speaker, SpeakerCreate, SpeakerUpdate
 
 speakers_db: Dict[int, Speaker] = {}
 speaker_id_counter = 1

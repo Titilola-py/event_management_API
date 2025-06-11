@@ -1,7 +1,8 @@
 from typing import Dict, List, Optional
 from datetime import datetime
-from schemas.registration_schema import Registration, RegistrationCreate, RegistrationUpdate
+from schemas.registration import Registration, RegistrationCreate, RegistrationUpdate
 from services.event_service import get_event
+from services.user_service import get_user
 
 registrations_db: Dict[int, Registration] = {}
 registration_id_counter = 1
@@ -9,26 +10,35 @@ registration_id_counter = 1
 def create_registration(registration_data: RegistrationCreate) -> Registration:
     global registration_id_counter
 
+    # Check if user exists
     user = get_user(registration_data.user_id)
     if not user:
         raise ValueError("User not found")
-    if not user_is_active:
+    
+    # Check if user is active (assuming user has an 'active' field)
+    if hasattr(user, 'active') and not user.active:
         raise ValueError("Only active users can register for event")
     
+    # Check if event exists
+    event = get_event(registration_data.event_id)
+    if not event:
+        raise ValueError("Event not found")
+    
+    # Check if user is already registered for this event
     for registration in registrations_db.values():
         if (registration.user_id == registration_data.user_id and
             registration.event_id == registration_data.event_id):
             raise ValueError("User is already registered for this event")
         
     registration = Registration(
-         id=registration_id_counter,
+        id=registration_id_counter,
         user_id=registration_data.user_id,
         event_id=registration_data.event_id,
         registration_date=datetime.now(),
         attended=False
     )
     registrations_db[registration_id_counter] = registration
-    registration_id_counter = 1
+    registration_id_counter += 1 
     return registration
 
 def get_registration(registration_id: int) -> Optional[Registration]:
@@ -47,15 +57,15 @@ def mark_attendance(registration_id: int) -> Optional[Registration]:
     if registration_id not in registrations_db:
         return None
     
-    registration = registrations_db[registration_id].attended = True
+    registrations_db[registration_id].attended = True
     return registrations_db[registration_id]
 
 def update_registration(registration_id: int, registration_data: RegistrationUpdate) -> Optional[Registration]:
-    if registration_id in registrations_db:
+    if registration_id not in registrations_db: 
         return None
     
     registration = registrations_db[registration_id]
-    update_data = registrations_db.model_dump(exclude_unset=True)
+    update_data = registration_data.model_dump(exclude_unset=True) 
 
     for field, value in update_data.items():
         setattr(registration, field, value)

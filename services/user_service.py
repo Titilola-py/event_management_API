@@ -1,5 +1,5 @@
 from typing import Dict, List, Optional
-from schemas.user_schema import User, UserCreate, UserUpdate
+from schemas.user import User, UserCreate, UserUpdate
 
 users_db: Dict[int, User] = {}
 user_id_counter = 1
@@ -13,7 +13,7 @@ def create_user(user_data: UserCreate) -> User:
         
     user = User(
         id=user_id_counter,
-        name=user_data.name
+        name=user_data.name,
         email=user_data.email,
         is_active=True
     )    
@@ -35,8 +35,8 @@ def update_user(user_id: int, user_data: UserUpdate) -> Optional[User]:
     update_data = user_data.model_dump(exclude_unset=True)
 
     if "email" in update_data:
-        for uid, exixting_user in users_db.items():
-            if uid != user_id and exixting_user.email == update_data["email"]:
+        for uid, existing_user in users_db.items():
+            if uid != user_id and existing_user.email == update_data["email"]:
                 raise ValueError("Email already exists")
             
     for field, value in update_data.items():
@@ -56,4 +56,3 @@ def deactivate_user(user_id: int) -> Optional[User]:
 
     users_db[user_id].is_active = False
     return users_db[user_id]
-          

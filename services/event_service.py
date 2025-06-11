@@ -1,5 +1,5 @@
 from typing import Dict, List, Optional
-from schemas.event_schema import Event, EventCreate, EventUpdate
+from schemas.event import Event, EventCreate, EventUpdate
 
 events_db: Dict[int, Event] = {}
 event_id_counter = 1
@@ -11,7 +11,7 @@ def create_event(event_data: EventCreate) -> Event:
         id=event_id_counter,
         title=event_data.title,
         location=event_data.location,
-        date=event_data.date,
+        event_date=event_data.event_date, 
         is_open=True
     )
     events_db[event_id_counter] = event
@@ -47,4 +47,4 @@ def close_event_registration(event_id: int) -> Optional[Event]:
         return None
 
     events_db[event_id].is_open = False
-    return events_db[event_id]    
+    return events_db[event_id]
