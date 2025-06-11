@@ -17,7 +17,7 @@ class EventUpdate(BaseModel):
     is_open: Optional[bool] = None
 
 class Event(EventBase):
-    id: int = Field(..., description,="Unique identifier for the event")
+    id: int = Field(..., description="Unique identifier for the event")
     is_open: bool = Field(default=True, description="Whether the event is accepting new attendees")
 
 class Config:
