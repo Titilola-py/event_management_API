@@ -44,7 +44,7 @@ A FastAPI-based system for managing events, users, speakers, and registrations. 
 1. **Start the server**
 
    ```bash
-   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+   uvicorn main:app --reload
    ```
 
 2. **Access the API**
