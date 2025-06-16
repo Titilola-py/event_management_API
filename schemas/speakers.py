@@ -3,7 +3,7 @@ from typing import Optional
 
 class SpeakerBase(BaseModel):
     name: str = Field(..., min_length=1, max_length=100, description="Name of the speaker")
-    topic: str = Field(..., min_length=1, max_length=200, description="Topic they will be description")
+    topic: str = Field(..., min_length=1, max_length=200, description="Topic they will be presenting")
 
 class SpeakerCreate(SpeakerBase):
     pass
